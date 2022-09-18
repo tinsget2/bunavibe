@@ -1,0 +1,47 @@
+#To use this api you have to change a few codes
+
+#1.Change the path of the directory in /Custom/Database/Lesssequredquery/ folder 
+#less_Secure_Include.php file
+
+$path = $_SERVER['DOCUMENT_ROOT'];
+$root_Dir = "/com_library"; #change this path to where Custom file is located starting from the root folder name
+
+
+#2.Change the path of the directory in /Custom/Database/Sequredquery/ folder 
+#sequre_Query_Include.php file
+
+$path = $_SERVER['DOCUMENT_ROOT'];
+$root_Dir = "/com_library"; #change this path to where Custom file is located starting from the root folder name
+
+#3. change the data base configuration in /Custom/Variable/ folder constants.php
+
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'dateapp');
+
+#4. from the upper file also update
+define('SECRETE_KEY', 'tEST123');
+define('ENCRIPTION_KEY', 'tEST1234');
+define('SECRETE_TOKEN_KEY', 'TEST123');
+define('USER_COOCKIE_NAME', 'Test1');
+
+#5. also give path for file uploads
+define('PATH1', '');
+define('PATH2', '');
+define('PATH3', '');
+define('PATH4', '');
+define('PATH5', '');
+define('PATH6', '');
+
+#6.
+#To use less secure get, post, put, delete metods use less secure verson of the api
+#you have to include "less_Secure_Include.php" file from /Custom/Database/Lesssequredquery/ folder
+#ex 
+require_once /Custom/Database/Lesssequredquery/less_Secure_Include.php
+
+
+#To use secure get, post, put, delete metods use secure verson of the api
+#you have to include "sequre_Query_Include.php" file from /Custom/Database/Sequredquery/ folder
+#ex 
+require_once /Custom/Database/Sequredquery/sequre_Query_Include.php
