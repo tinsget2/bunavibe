@@ -35,6 +35,8 @@
     $eduAlies = $input->eduAlies;
     $degreeType = $input->degreeType;
     $graduatedIn = $input->graduatedIn;
+    $minor = $input->minor;
+    $major = $input->major;
     $graduatedFrom = $input->graduatedFrom;
     $startDate = $input->startDate;      
     $endDate = $input->endDate;
@@ -42,9 +44,9 @@
 
     $sql_Query = new Data_Validate($token, $createdToken, 'PUT', 'Update');
 
-    $query = "UPDATE `education` SET `graduatedIn`=?, `degreeType`=?,`graduatedFrom`=?,`description`=?,`startDate`=?,`endDate`=? WHERE `alies`=? AND `eduAlies`=?";
-    $value = array($graduatedIn, $degreeType, $graduatedFrom, $description, $startDate, $endDate, $alies, $eduAlies);
-    $type = 'ssssssss';
+    $query = "UPDATE `education` SET `graduatedIn`=?,`minor`=?,`major`=?, `degreeType`=?,`graduatedFrom`=?,`description`=?,`startDate`=?,`endDate`=? WHERE `alies`=? AND `eduAlies`=?";
+    $value = array($graduatedIn, $minor, $major, $degreeType, $graduatedFrom, $description, $startDate, $endDate, $alies, $eduAlies);
+    $type = 'ssssssssss';
 
     $result = $sql_Query->data_Validate($query, $value, $type);
 

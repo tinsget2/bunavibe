@@ -11,17 +11,17 @@
 
 	//Local
 	//DB config 
-	// define('DB_HOST', 'localhost');
-	// define('DB_USER', 'root');
-	// define('DB_PASS', '');
-	// define('DB_NAME', 'bunavibe');
+	define('DB_HOST', 'localhost');
+	define('DB_USER', 'root');
+	define('DB_PASS', '');
+	define('DB_NAME', 'bunavibe');
 
 	//Hosted
 	//DB config 
-	define('DB_HOST', 'localhost');
-	define('DB_USER', 'id19588600_bunauser');
-	define('DB_PASS', 'testBuna@2015');
-	define('DB_NAME', 'id19588600_bunavibe');
+	// define('DB_HOST', 'localhost');
+	// define('DB_USER', 'id19588600_bunauser');
+	// define('DB_PASS', 'testBuna@2015');
+	// define('DB_NAME', 'id19588600_bunavibe');
 
 
 	//To encript json web token

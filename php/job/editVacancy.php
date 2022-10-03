@@ -30,25 +30,27 @@
     $createdToken = $email.$phone.URL.$iat.$authorization;
 
     //Get Value
-    $input = json_decode(file_get_contents("php://input"));      
-    $degreeType = $input->degreeType;
-    $graduatedIn = $input->graduatedIn;
-    $minor = $input->minor;
-    $major = $input->major;
-    $graduatedFrom = $input->graduatedFrom;
-    $startDate = $input->startDate;      
+    $input = json_decode(file_get_contents("php://input"));
+    $jobAlies = $input->jobAlies;
+    $companyName = $input->companyName;
+    $aboutCompany = $input->aboutCompany;
+    $jobTitle = $input->jobTitle;
+    $jobCatagory = $input->jobCatagory;
+    $jobType = $input->jobType;
+    $jobEducation = $input->jobEducation;
+    $experience = $input->experience;
+    $salary = $input->salary;
+    $postedDate = $input->postedDate;
     $endDate = $input->endDate;
-    $description = $input->description;
+    $duty = $input->duty;
+    $requirement = $input->requirement;
+    $applyMethod = $input->applyMethod;
 
-    $time = time();
+    $sql_Query = new Data_Validate($token, $createdToken, 'PUT', 'Update');
 
-    $eduAlias = substr($graduatedIn, 0, strpos($graduatedIn," ")).$time.rand(100,1000);
-
-    $sql_Query = new Data_Validate($token, $createdToken, 'POST', 'Insert');
-
-    $query = "INSERT INTO `education`(`alies`, `eduAlies`, `degreeType`, `graduatedIn`, `minor`, `major`, `graduatedFrom`, `description`, `startDate`, `endDate`) VALUES(?, ?, ?,?, ?, ?, ?, ?, ?, ?)";
-    $value = array($alies, $eduAlias, $degreeType, $graduatedIn, $minor, $major, $graduatedFrom, $description, $startDate, $endDate);
-    $type = 'ssssssssss';
+    $query = "UPDATE `vacancy` SET `companyName`=?,`aboutCompany`=?,`jobTitle`=?,`jobCatagory`=?,`jobType`=?,`jobEducation`=?,`experience`=?,`salary`=?,`postedDate`=?,`endDate`=?,`duty`=?,`requirement`=?,`applyMethod`=? WHERE `alies`=? AND `jobAlies`=?";
+    $value = array($companyName, $aboutCompany, $jobTitle, $jobCatagory, $jobType, $jobEducation, $experience, $salary, $postedDate, $endDate, $duty, $requirement, $applyMethod, $alies, $jobAlies);
+    $type = 'sssssssssssssss';
 
     $result = $sql_Query->data_Validate($query, $value, $type);
 

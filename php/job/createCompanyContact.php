@@ -30,25 +30,19 @@
     $createdToken = $email.$phone.URL.$iat.$authorization;
 
     //Get Value
-    $input = json_decode(file_get_contents("php://input"));      
-    $degreeType = $input->degreeType;
-    $graduatedIn = $input->graduatedIn;
-    $minor = $input->minor;
-    $major = $input->major;
-    $graduatedFrom = $input->graduatedFrom;
-    $startDate = $input->startDate;      
-    $endDate = $input->endDate;
-    $description = $input->description;
-
-    $time = time();
-
-    $eduAlias = substr($graduatedIn, 0, strpos($graduatedIn," ")).$time.rand(100,1000);
+    $input = json_decode(file_get_contents("php://input"));
+    $jobAlies = $input->jobAlies;
+    $country = $input->country;
+    $city = $input->city;
+    $address = $input->address;
+    $phone_Company = $input->phone;
+    $email_Company = $input->email;
 
     $sql_Query = new Data_Validate($token, $createdToken, 'POST', 'Insert');
 
-    $query = "INSERT INTO `education`(`alies`, `eduAlies`, `degreeType`, `graduatedIn`, `minor`, `major`, `graduatedFrom`, `description`, `startDate`, `endDate`) VALUES(?, ?, ?,?, ?, ?, ?, ?, ?, ?)";
-    $value = array($alies, $eduAlias, $degreeType, $graduatedIn, $minor, $major, $graduatedFrom, $description, $startDate, $endDate);
-    $type = 'ssssssssss';
+    $query = "INSERT INTO `companyaddress`(`jobAlies`, `country`, `city`, `address`, `phone`, `email`) VALUES (?,?,?,?,?,?)";
+    $value = array($jobAlies, $country, $city, $address, $phone_Company, $email_Company);
+    $type = 'ssssss';
 
     $result = $sql_Query->data_Validate($query, $value, $type);
 

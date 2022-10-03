@@ -30,25 +30,19 @@
     $createdToken = $email.$phone.URL.$iat.$authorization;
 
     //Get Value
-    $input = json_decode(file_get_contents("php://input"));      
-    $degreeType = $input->degreeType;
-    $graduatedIn = $input->graduatedIn;
-    $minor = $input->minor;
-    $major = $input->major;
-    $graduatedFrom = $input->graduatedFrom;
-    $startDate = $input->startDate;      
-    $endDate = $input->endDate;
-    $description = $input->description;
+    $input = json_decode(file_get_contents("php://input"));
+    $jobAlies = $input->jobAlies;
+    $country = $input->country;
+    $city = $input->city;
+    $address = $input->address;
+    $phone = $input->phone;
+    $email = $input->email;
 
-    $time = time();
+    $sql_Query = new Data_Validate($token, $createdToken, 'PUT', 'Update');
 
-    $eduAlias = substr($graduatedIn, 0, strpos($graduatedIn," ")).$time.rand(100,1000);
-
-    $sql_Query = new Data_Validate($token, $createdToken, 'POST', 'Insert');
-
-    $query = "INSERT INTO `education`(`alies`, `eduAlies`, `degreeType`, `graduatedIn`, `minor`, `major`, `graduatedFrom`, `description`, `startDate`, `endDate`) VALUES(?, ?, ?,?, ?, ?, ?, ?, ?, ?)";
-    $value = array($alies, $eduAlias, $degreeType, $graduatedIn, $minor, $major, $graduatedFrom, $description, $startDate, $endDate);
-    $type = 'ssssssssss';
+    $query = "UPDATE `companyaddress` SET `country`=?,`city`=?,`address`=?,`phone`=?,`email`=? WHERE `jobAlies`=?";
+    $value = array($country, $city, $address, $phone, $email, $jobAlies);
+    $type = 'ssssss';
 
     $result = $sql_Query->data_Validate($query, $value, $type);
 

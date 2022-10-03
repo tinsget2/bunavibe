@@ -30,25 +30,17 @@
     $createdToken = $email.$phone.URL.$iat.$authorization;
 
     //Get Value
-    $input = json_decode(file_get_contents("php://input"));      
-    $degreeType = $input->degreeType;
-    $graduatedIn = $input->graduatedIn;
-    $minor = $input->minor;
-    $major = $input->major;
-    $graduatedFrom = $input->graduatedFrom;
-    $startDate = $input->startDate;      
-    $endDate = $input->endDate;
-    $description = $input->description;
+    $input = json_decode(file_get_contents("php://input"));   
+       
+    $newPassword = $input->newPassword;
+    $oldPassword = $input->oldPassword; 
 
-    $time = time();
 
-    $eduAlias = substr($graduatedIn, 0, strpos($graduatedIn," ")).$time.rand(100,1000);
+    $sql_Query = new Data_Validate($token, $createdToken, 'PUT', 'Update');
 
-    $sql_Query = new Data_Validate($token, $createdToken, 'POST', 'Insert');
-
-    $query = "INSERT INTO `education`(`alies`, `eduAlies`, `degreeType`, `graduatedIn`, `minor`, `major`, `graduatedFrom`, `description`, `startDate`, `endDate`) VALUES(?, ?, ?,?, ?, ?, ?, ?, ?, ?)";
-    $value = array($alies, $eduAlias, $degreeType, $graduatedIn, $minor, $major, $graduatedFrom, $description, $startDate, $endDate);
-    $type = 'ssssssssss';
+    $query = "UPDATE `userinfo` SET `password` = ? WHERE `alies` = ? AND `password` = ?";
+    $value = array($newPassword, $alies, $oldPassword);
+    $type = 'sss';
 
     $result = $sql_Query->data_Validate($query, $value, $type);
 

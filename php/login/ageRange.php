@@ -30,31 +30,40 @@
     $createdToken = $email.$phone.URL.$iat.$authorization;
 
     //Get Value
-    $input = json_decode(file_get_contents("php://input"));      
-    $degreeType = $input->degreeType;
-    $graduatedIn = $input->graduatedIn;
-    $minor = $input->minor;
-    $major = $input->major;
-    $graduatedFrom = $input->graduatedFrom;
-    $startDate = $input->startDate;      
-    $endDate = $input->endDate;
-    $description = $input->description;
+    $input = json_decode(file_get_contents("php://input"));   
+       
+    $minAge = $input->minAge;
+    $maxAge = $input->maxAge; 
+    $chk = false;
 
-    $time = time();
+    if($minAge < 18){
+        $minAge = 18;
+        $chk = true;
+    }
 
-    $eduAlias = substr($graduatedIn, 0, strpos($graduatedIn," ")).$time.rand(100,1000);
+    if($maxAge < 18){
+        $maxAge = 18;
+        $chk = true;
+    }
 
-    $sql_Query = new Data_Validate($token, $createdToken, 'POST', 'Insert');
 
-    $query = "INSERT INTO `education`(`alies`, `eduAlies`, `degreeType`, `graduatedIn`, `minor`, `major`, `graduatedFrom`, `description`, `startDate`, `endDate`) VALUES(?, ?, ?,?, ?, ?, ?, ?, ?, ?)";
-    $value = array($alies, $eduAlias, $degreeType, $graduatedIn, $minor, $major, $graduatedFrom, $description, $startDate, $endDate);
-    $type = 'ssssssssss';
+    if($chk == true){
+        http_response_code(FORBIDDEN);
+        echo json_encode(array('Status'=>FORBIDDEN, 'Message'=>'Age must be greater than 18'));
+    }else{
+
+    $sql_Query = new Data_Validate($token, $createdToken, 'PUT', 'Update');
+
+    $query = "UPDATE `userinfo` SET `selectedAgeRangeMin`=?, `selectedAgeRangeMax`=? WHERE `alies`=?";
+    $value = array($minAge, $maxAge, $alies);
+    $type = 'sss';
 
     $result = $sql_Query->data_Validate($query, $value, $type);
 
     if(!($result == "") || !($result == null)){
         http_response_code(SUCCESS_RESPONSE);
         echo json_encode(array('Status'=>$status, 'Message'=>$result));
+    }
     }
 
 

@@ -1,4 +1,5 @@
 <?php
+//Get only one posted account for the poster
     require_Once "../../plugin/api/Custom/Database/Sequredquery/sequre_Query_Include.php";
 
     header('Content-Type: application/json');
@@ -29,26 +30,16 @@
     //Token create mostly from uniquedatafromjwttoken+iat+secrettokenkey
     $createdToken = $email.$phone.URL.$iat.$authorization;
 
-    //Get Value
-    $input = json_decode(file_get_contents("php://input"));      
-    $degreeType = $input->degreeType;
-    $graduatedIn = $input->graduatedIn;
-    $minor = $input->minor;
-    $major = $input->major;
-    $graduatedFrom = $input->graduatedFrom;
-    $startDate = $input->startDate;      
-    $endDate = $input->endDate;
-    $description = $input->description;
+    
+    // Get Value
+    $jobAlies = $_GET['jobAlies'];
+    
 
-    $time = time();
+    $sql_Query = new Data_Validate($token, $createdToken, 'GET', 'Select');
 
-    $eduAlias = substr($graduatedIn, 0, strpos($graduatedIn," ")).$time.rand(100,1000);
-
-    $sql_Query = new Data_Validate($token, $createdToken, 'POST', 'Insert');
-
-    $query = "INSERT INTO `education`(`alies`, `eduAlies`, `degreeType`, `graduatedIn`, `minor`, `major`, `graduatedFrom`, `description`, `startDate`, `endDate`) VALUES(?, ?, ?,?, ?, ?, ?, ?, ?, ?)";
-    $value = array($alies, $eduAlias, $degreeType, $graduatedIn, $minor, $major, $graduatedFrom, $description, $startDate, $endDate);
-    $type = 'ssssssssss';
+    $query = "SELECT * FROM `vacancy` WHERE `alies`=? AND `jobAlies`=? LIMIT ?";
+    $value = array($alies, $jobAlies, 1);
+    $type = 'ssi';
 
     $result = $sql_Query->data_Validate($query, $value, $type);
 
@@ -56,6 +47,5 @@
         http_response_code(SUCCESS_RESPONSE);
         echo json_encode(array('Status'=>$status, 'Message'=>$result));
     }
-
 
 ?>
