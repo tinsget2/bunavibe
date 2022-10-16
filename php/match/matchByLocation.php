@@ -63,6 +63,7 @@
             LEFT JOIN `address` `a2` ON `u`.`alies`=`a2`.`alies`
             LEFT JOIN `address` `a1` ON `a1`.`alies` = ?
         WHERE
+            `u`.`gender`=(SELECT `InterestedIn` FROM `userinfo` WHERE `alies` = ?) AND
             (
                 `u`.`accountType` = ? OR `u`.`accountType` = ?
             ) AND `u`.`status` = ? AND `u`.`privacy` = ? AND(
@@ -88,9 +89,10 @@
                 `userinfo`
             WHERE
                 `alies` = ?
-        ) AND NOT `u`.`alies` = ? ORDER BY `distanceInMeter` ASC";
-    $value = array($alies, 1, 3, 1, 1, $alies, $alies, $alies);
-    $type = 'siiiisss';
+        ) AND NOT `u`.`alies` = ? 
+        ORDER BY `distanceInMeter` ASC";
+    $value = array($alies, $alies, 1, 3, 1, 1, $alies, $alies, $alies);
+    $type = 'ssiiiisss';
 
     $result = $sql_Query->data_Validate($query, $value, $type);
 
